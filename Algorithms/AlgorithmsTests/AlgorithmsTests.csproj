@@ -56,10 +56,15 @@
     <Compile Include="AreParenthesisBalanced.cs" />
     <Compile Include="BSTTests.cs" />
     <Compile Include="ListUnionAndIntersection.cs" />
+    <Compile Include="MagicIndex.cs" />
     <Compile Include="MergeKSortedArrays.cs" />
+    <Compile Include="RotateMatrix.cs" />
+    <Compile Include="SortingTests.cs" />
     <Compile Include="ReverseAndPalindrome.cs" />
     <Compile Include="ReverseATree.cs" />
     <Compile Include="ReversePolishNotation.cs" />
+    <Compile Include="RobotInGrid.cs" />
+    <Compile Include="StringPermutations.cs" />
     <Compile Include="UncompressSeriesNumber.cs" />
     <Compile Include="HashyableImpTests.cs" />
     <Compile Include="IntToCol.cs" />
