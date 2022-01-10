@@ -18,7 +18,7 @@
         int sum =0;
         int indexToRemove = -k;
 
-        for (int i=0, j=0; i<array.Length; i++, indexToRemove++)
+        for (int i=0; i<array.Length; i++, indexToRemove++)
         {
             // add the current number
             sum+= array[i];
