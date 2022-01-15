@@ -27,6 +27,59 @@ Output: [2, 3, 4]
 Explanation: The three anagrams of the pattern in the given string are "bca", "cab", and "abc".
 */
 
+List<int> StringAnagrams_Optomized(string str, string pattern)
+{
+    List<int> matches = new();
+    Dictionary<char, int> patternMap = new Dictionary<char, int>();
+    HashSet<char> patternChars = new HashSet<char>(pattern);
+    int matched= 0;
+    //set the pattern map
+    for (int i=0; i< pattern.Length; i++)
+    {
+        int count = patternMap.GetValueOrDefault(pattern[i]) + 1;
+        patternMap[pattern[i]] = count;
+    }
+
+    for (int start = 0, end =0; end < str.Length; end++)
+    {
+        // if this char is part of the pattern, remove it
+        if (patternChars.Contains(str[end]))
+        {
+            int count = patternMap.GetValueOrDefault(str[end]) - 1;
+            if (count <= 0)
+            {
+                patternMap.Remove(str[end]);
+                matched++;
+            }
+            else
+            {
+                patternMap[str[end]] = count;
+            }
+        }
+
+        if (matched == patternChars.Count)
+        {
+            matches.Add(start);
+        }
+
+        // if we've found a window length that matches, check if this is an anagram
+        if (end-start+1 == pattern.Length)
+        {
+            // move the start of the windows one position
+            // this way we always have a window the size of the pattern
+            if (patternChars.Contains(str[start]))
+            {
+                int count = patternMap.GetValueOrDefault(str[start]) + 1;
+                patternMap[str[start]] = count;
+                matched--;
+            }
+            start++;
+        }
+    }
+
+    return matches;
+}
+
 List<int> StringAnagrams(string str, string pattern)
 {
     List<int> matches = new();
