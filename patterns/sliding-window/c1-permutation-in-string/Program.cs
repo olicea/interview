@@ -53,13 +53,20 @@ bool ContainsPermutation(string str, string pattern)
     // if the window contains all the chard in the pattern we are good
 
     Dictionary<char,int> foundChars = new();
-    HashSet<char> patterChars = new(pattern);
+    Dictionary<char,int> patterChars = new();
+
+    for (int i =0; i<pattern.Length; i++)
+    {            
+        int pCount = patterChars.GetValueOrDefault(pattern[i]) + 1;
+        patterChars[pattern[i]] = pCount;
+    }
+
     int count =0;
 
     for (int end=0, start=0; end<str.Length; end++)
     {
         // if the char is part of the pattern count it
-        if (patterChars.Contains(str[end]))
+        if (patterChars.ContainsKey(str[end]))
         {
             int charCount = foundChars.GetValueOrDefault(str[end]);
             charCount++;
@@ -72,11 +79,21 @@ bool ContainsPermutation(string str, string pattern)
         {
             if (pattern.Length == count)
             {
-                return true;
+                // if we have all the letters on the window check that they all match
+                bool alllMatches =true;
+                foreach (KeyValuePair<char, int> kvp in patterChars)
+                {
+                    if (kvp.Value != foundChars[kvp.Key])
+                    {
+                        alllMatches = false;
+                        break;
+                    }
+                }
+                if (alllMatches) return true;
             }
 
             // substract the chat (if is part of the pattern)
-            if (patterChars.Contains(str[start]))
+            if (patterChars.ContainsKey(str[start]))
             {
                 int charCount = foundChars[str[start]];
                 charCount--;
@@ -105,3 +122,4 @@ Console.WriteLine($"{ContainsPermutation("oidbcaf", "abc")}");
 Console.WriteLine($"{ContainsPermutation("odicf", "dc")}");
 Console.WriteLine($"{ContainsPermutation("bcdxabcdy", "bcdyabcdx")}");
 Console.WriteLine($"{ContainsPermutation("aaacb", "abc")}");
+Console.WriteLine($"{ContainsPermutation("aab", "bba")}");
