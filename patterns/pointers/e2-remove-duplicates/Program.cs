@@ -23,6 +23,18 @@ static int RemoveDuplicates(int[] arr)
     int length = 0;
     for (int i=0; i<arr.Length; i++)
     {
+        // count the character, if it is the first one, or it is different from the previous one
+        if (i==0 || arr[i] != arr[i-1]) length++;
+    }
+
+    return length;
+}
+
+static int RemoveDuplicatesTwoLoops(int[] arr)
+{
+    int length = 0;
+    for (int i=0; i<arr.Length; i++)
+    {
         // count the current character
         length++;
 
