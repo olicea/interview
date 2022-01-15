@@ -51,14 +51,19 @@ bool ContainsPermutation(string str, string pattern)
 
     // walk the string, keep track of the chars we see
     // if the window contains all the chard in the pattern we are good
+
+    Dictionary<char,int> foundChars = new();
     HashSet<char> patterChars = new(pattern);
-    int count = 0;
+    int count =0;
 
     for (int end=0, start=0; end<str.Length; end++)
     {
         // if the char is part of the pattern count it
         if (patterChars.Contains(str[end]))
         {
+            int charCount = foundChars.GetValueOrDefault(str[end]);
+            charCount++;
+            foundChars[str[end]] = charCount;
             count++;
         }
 
@@ -73,12 +78,23 @@ bool ContainsPermutation(string str, string pattern)
             // substract the chat (if is part of the pattern)
             if (patterChars.Contains(str[start]))
             {
+                int charCount = foundChars[str[start]];
+                charCount--;
                 count--;
+                if (charCount ==0)
+                {
+                    foundChars.Remove(str[start]);
+                }
+                else
+                {
+                    foundChars[str[start]] = charCount;
+                }
             }
 
             start++;
         }
         // any char not part of the pattern is ignored
+
     }
 
     // we did not find a substring
